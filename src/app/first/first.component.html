@@ -1,0 +1,251 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>My App</title>
+  <style>
+
+    h1 {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    header {
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #f1f1f1;
+      z-index: 1;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: space-between;
+    }
+
+      header.expanded-header {
+        height: 500px;
+        background-color: #fff;
+      }
+
+    body::before {
+      content: "";
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 42px;
+      background-color: #c8e1ff;
+      z-index: -1;
+    }
+
+    body {
+      padding-top: 42px;
+    }
+    /* Add this to center the button container */
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+      .button-container ul {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .button-container li {
+        margin-right: 20px;
+      }
+
+      .button-container button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+        .button-container button:hover {
+          opacity: 0.8;
+        }
+
+
+    .language-select-container {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 10px;
+    }
+
+    section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 50px;
+      margin-bottom: 50px;
+    }
+
+
+    nav {
+      position: relative;
+      width: 50%;
+      text-align: center;
+    }
+
+
+    .nav-left button, .nav-right button {
+      background-color: transparent;
+      border: none;
+      color: #333;
+      font-size: 18px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+        .nav-left button:hover, .nav-right button:hover {
+          color: #4CAF50;
+          cursor: pointer;
+        }
+
+      .nav-left ul, .nav-right ul {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        background-color: #fff;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        padding: 10px;
+        list-style: none;
+        display: none;
+      }
+
+        .nav-left ul li, .nav-right ul li {
+          margin-bottom: 10px;
+        }
+
+    .show-list {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <section>
+      <div class="language-select-container">
+        <form class="form-inline">
+          <div class="form-group">
+            <label for="languageSelect" class="mr-2"></label>
+            <style>
+              #languageSelect option[value="english"] {
+                padding-left: 25px;
+              }
+
+              #languageSelect option[value="german"] {
+                padding-left: 25px;
+              }
+
+              #languageSelect option[value="romanian"] {
+                padding-left: 25px;
+              }
+            </style>
+
+            <select id="languageSelect" (change)="updateLanguage(inputValue)">
+              <option value="english">English</option>
+              <option value="german">Deutsch</option>
+              <option value="romanian">Română</option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </section>
+    <nav class="nav-left">
+      <button (click)="toggleTeamsList()" mat-raised-button>Get teams</button>
+      <mat-list role="list" *ngIf="showTeamsList">
+        <!-- use *ngIf to show/hide the list based on the value of showTeamsList -->
+        <mat-list-item role="listitem" *ngFor="let team of teamsFromDB">
+          <pre>{{ team | json }}</pre>
+        </mat-list-item>
+      </mat-list>
+    </nav>
+    <nav class="nav-right">
+      <button (click)="togglePlayersList()" mat-raised-button>Get players</button>
+      <mat-list role="list" *ngIf="showPlayersList">
+        <!-- use *ngIf to show/hide the list based on the value of showPlayersList -->
+        <mat-list-item role="listitem" *ngFor="let player of playersFromDB">
+          <pre>{{ player | json }}</pre>
+        </mat-list-item>
+      </mat-list>
+    </nav>
+  </header>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // Get the height of the header
+    var headerHeight = $('header').outerHeight();
+
+    // Apply the height to the content element
+    $('.content').css('padding-top', headerHeight);
+  </script>
+
+  <section>
+    <h2 style="font-style: italic;">Your username is {{inputValue}}</h2>
+    <mat-form-field class="example-form-field">
+      <mat-label>Enter username</mat-label>
+      <input matInput type="text" [(ngModel)]="inputValue" (input)="updateLanguage(inputValue)">
+      <button *ngIf="inputValue" matSuffix mat-icon-button aria-label="Clear" (click)="inputValue=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </section>
+
+
+  <section>
+    <mat-form-field class="example-form-field">
+      <mat-label>Enter player name</mat-label>
+      <input matInput type="text" [(ngModel)]="newPlayerName">
+      <button *ngIf="newPlayerName" matSuffix mat-icon-button aria-label="Clear" (click)="newPlayerName=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field class="example-form-field">
+      <mat-label>Enter player age</mat-label>
+      <input matInput type="text" [(ngModel)]="newPlayerAlter" pattern="[0-9]*">
+      <button *ngIf="newPlayerAlter" matSuffix mat-icon-button aria-label="Clear" (click)="newPlayerAlter=0">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field class="example-form-field">
+      <mat-label>Enter player position</mat-label>
+      <input matInput type="text" [(ngModel)]="newPlayerPosition">
+      <button *ngIf="newPlayerPosition" matSuffix mat-icon-button aria-label="Clear" (click)="newPlayerPosition=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button (click)="addPlayer()" mat-raised-button>Add player</button>
+  </section>
+
+  <section>
+    <mat-form-field class="example-form-field">
+      <mat-label>Enter team name</mat-label>
+      <input matInput type="text" [(ngModel)]="newTeamName">
+      <button *ngIf="newTeamName" matSuffix mat-icon-button aria-label="Clear" (click)="newTeamName=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field class="example-form-field">
+      <mat-label>Enter team country</mat-label>
+      <input matInput type="text" [(ngModel)]="newTeamCountry">
+      <button *ngIf="newTeamCountry" matSuffix mat-icon-button aria-label="Clear" (click)="newTeamCountry=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button (click)="addTeam()" mat-raised-button>Add team</button>
+  </section>
