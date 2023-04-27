@@ -171,7 +171,7 @@
       <mat-list role="list" *ngIf="showTeamsList">
         <!-- use *ngIf to show/hide the list based on the value of showTeamsList -->
         <mat-list-item role="listitem" *ngFor="let team of teamsFromDB">
-          <pre>{{ team | json }}</pre>
+          <pre>Name: {{ team.Name}} | Country: {{team.Country}}</pre>
         </mat-list-item>
       </mat-list>
     </nav>
@@ -180,7 +180,7 @@
       <mat-list role="list" *ngIf="showPlayersList">
         <!-- use *ngIf to show/hide the list based on the value of showPlayersList -->
         <mat-list-item role="listitem" *ngFor="let player of playersFromDB">
-          <pre>{{ player | json }}</pre>
+          <pre>Name: {{ player.Name}} | Age: {{player.Alter}} | Pos:{{player.Position}}</pre>
         </mat-list-item>
       </mat-list>
     </nav>
