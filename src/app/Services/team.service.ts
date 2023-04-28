@@ -13,12 +13,12 @@ export class TeamService {
 
   getTeams(): Observable<Team[]> {
     console.log(this.fs);
-    const myCollection: any = collection(this.fs, 'teams1');
+    const myCollection: any = collection(this.fs, 'teams0');
     return collectionData(myCollection);
   }
 
   addTeam(team: Team) {
-    const myCollection = collection(this.fs, 'teams1')
+    const myCollection = collection(this.fs, 'teams0')
     addDoc(myCollection, team);
   }
 }

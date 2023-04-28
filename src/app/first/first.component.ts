@@ -25,8 +25,8 @@ export class FirstComponent {
   newTeamName: string = '';
   newTeamCountry: string = '';
 
-  showTeamsList = false; // new variable to keep track of the state of the teams list
-  showPlayersList = false; // new variable to keep track of the state of the players list
+  showTeamsList = false;
+  showPlayersList = false;
 
 
   changeText():void{
@@ -66,14 +66,14 @@ export class FirstComponent {
     if (this.showTeamsList) {
       this.getTeams();
     }
-    this.showTeamsList = !this.showTeamsList; // toggle the value
+    this.showTeamsList = !this.showTeamsList;
   }
 
   togglePlayersList() {
     if (this.showPlayersList) {
       this.getPlayers();
     }
-    this.showPlayersList = !this.showPlayersList; // toggle the value
+    this.showPlayersList = !this.showPlayersList;
   }
 
   updateLanguage(inputValue: string): void {

@@ -42,7 +42,6 @@
     body {
       padding-top: 42px;
     }
-    /* Add this to center the button container */
     .button-container {
       display: flex;
       justify-content: center;
@@ -169,7 +168,6 @@
     <nav class="nav-left">
       <button (click)="toggleTeamsList()" mat-raised-button>Get teams</button>
       <mat-list role="list" *ngIf="showTeamsList">
-        <!-- use *ngIf to show/hide the list based on the value of showTeamsList -->
         <mat-list-item role="listitem" *ngFor="let team of teamsFromDB">
           <pre>Name: {{ team.Name}} | Country: {{team.Country}}</pre>
         </mat-list-item>
@@ -178,7 +176,6 @@
     <nav class="nav-right">
       <button (click)="togglePlayersList()" mat-raised-button>Get players</button>
       <mat-list role="list" *ngIf="showPlayersList">
-        <!-- use *ngIf to show/hide the list based on the value of showPlayersList -->
         <mat-list-item role="listitem" *ngFor="let player of playersFromDB">
           <pre>Name: {{ player.Name}} | Age: {{player.Alter}} | Pos:{{player.Position}}</pre>
         </mat-list-item>
@@ -188,10 +185,8 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    // Get the height of the header
     var headerHeight = $('header').outerHeight();
 
-    // Apply the height to the content element
     $('.content').css('padding-top', headerHeight);
   </script>
 

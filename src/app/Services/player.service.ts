@@ -13,12 +13,12 @@ export class PlayerService {
 
   getPlayers():Observable<Player[]>{
     console.log(this.fs);
-    const myCollection: any = collection(this.fs, 'players1');
+    const myCollection: any = collection(this.fs, 'players0');
     return collectionData(myCollection);
   }
 
   addPlayer(player:Player){
-    const myCollection = collection(this.fs, 'players1')
+    const myCollection = collection(this.fs, 'players0')
     addDoc(myCollection, player);
   }
 }
